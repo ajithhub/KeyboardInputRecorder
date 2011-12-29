@@ -8,41 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication2 {
-    public class KeyRecord {
-        public DateTime down;
-        public DateTime up;
-        private int duration;
-        int delay;
-        public Keys key;
-
-        public KeyRecord(Keys key) {
-            this.key = key;
- 
-        }
-        public String toAutoIT() {
-
-            StringBuilder r = new StringBuilder();
-            r.AppendFormat("Opt(\"SendKeyDelay\", {0})\n", this.Duration);
-            r.AppendFormat("Send(\"{{ASC {0}}}\")\n", this.key);
-
-            return r.ToString();
-
-        }
-
-        public int Duration {
-            get{
-                TimeSpan ts = up - down;
-                duration =  Convert.ToInt32(ts.TotalMilliseconds);
-                return duration;
-            }
-            set {
-                duration = value;
-            }
-        }
-    }
-
     public partial class Form1 : Form {
-        public List<KeyRecord> allrecords  = new List<KeyRecord>();
+        public List<KeyRecord> allrecords = new List<KeyRecord>();
         Dictionary<Keys, KeyRecord> lastDowns = new Dictionary<Keys, KeyRecord>();
 
         public Form1() {
@@ -76,4 +43,38 @@ namespace WindowsFormsApplication2 {
 
 
     }
+    public class KeyRecord {
+        public DateTime down;
+        public DateTime up;
+        private int duration;
+        int delay;
+        public Keys key;
+
+        public KeyRecord(Keys key) {
+            this.key = key;
+ 
+        }
+        public String toAutoIT() {
+
+            StringBuilder r = new StringBuilder();
+            r.AppendFormat("Opt(\"SendKeyDelay\", {0})\n", this.Duration);
+            r.AppendFormat("Send(\"{{ASC {0}}}\")\n", this.key);
+
+            return r.ToString();
+
+        }
+
+        public int Duration {
+            get{
+                TimeSpan ts = up - down;
+                duration =  Convert.ToInt32(ts.TotalMilliseconds);
+                return duration;
+            }
+            set {
+                duration = value;
+            }
+        }
+    }
+
+  
 }
